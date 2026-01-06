@@ -54,15 +54,15 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
     <!-- StyleSheets -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/src/style.css">
 
-    <title>DownGD | Advanced GitHub Downloader</title>
+    <title>Downloading...</title>
+
 </head>
 
 <body>
-
-    <div class="app-container">
+<div class="app-container" style="display: flex;justify-content: center;align-items: center;">
 
         <div class="bg-watermark">
             <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
@@ -86,126 +86,32 @@
                     fill="var(--accent)" transform="translate(495,393)" />
             </svg>
         </div>
-
-        <header>
-            <div class="logo">
-                <img src="/src/icon.png" alt="logo" srcset="" style="width: 60px;">
-                <h1>DownGD <span>2.O</span></h1>
-            </div>
-            <div class="header-controls">
-                <a href="/wiki/" class="icon-btn" title="Help & Wiki">
-                    <i class="ri-book-open-line"></i>
-                </a>
-                <button id="theme-btn" class="icon-btn" title="Change Theme">
-                    <i class="ri-palette-line"></i>
-                </button>
-                <button id="settings-btn" class="icon-btn" title="Settings">
-                    <i class="ri-settings-3-line"></i>
-                </button>
-            </div>
-        </header>
-
-        <main>
-            <div class="input-card">
-                <div class="url-input-wrapper">
-                    <i class="ri-link input-icon"></i>
-                    <input type="text" id="repo-url" placeholder="Paste GitHub URL..." autocomplete="off">
-                    <button id="paste-btn" title="Paste"><i class="ri-clipboard-line"></i></button>
-                </div>
-                <div class="url-input-wrapper compact">
-                    <i class="ri-pencil-line input-icon"></i>
-                    <input type="text" id="custom-filename" placeholder="Custom filename (optional)..."
-                        autocomplete="off">
-                </div>
-
-                <div class="action-area">
-                    <div class="button-group">
-                        <button id="download-btn" class="primary-btn">
-                            <span>Download</span>
-                            <i class="ri-download-cloud-2-line"></i>
-                        </button>
-                        <button id="share-btn" class="primary-btn" title="Copy Shareable Link" style="
-    max-width: fit-content;
-    margin-left: 5px;">
-                            <i class="ri-share-forward-line"></i>
-                        </button>
-                    </div>
-                </div>
+        <div class="card" id="card">
+            <div class="loader-container">
+                <div class="circular-progress"></div>
+                <div class="icon-success">✓</div>
+                <div class="icon-error">!</div>
             </div>
 
-            <!-- Status & Preview -->
-            <div id="status-card" class="status-card hidden">
-                <div class="status-header">
-                    <h3 id="status-title">Ready</h3>
-                    <span id="file-count" class="badge">0 Files</span>
-                </div>
-                <div class="progress-container">
-                    <div class="progress-bar" id="progress-bar"></div>
-                </div>
-                <p id="status-text">Waiting...</p>
-                <div class="file-preview" id="file-preview"></div>
-            </div>
-        </main>
+            <h1 id="status-title">Starting...</h1>
+            <p id="status-text">Connecting to GitHub</p>
 
-        <div id="settings-modal" class="modal hidden">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2>Settings</h2>
-                    <button type="button" class="close-modal"><i class="ri-close-line"></i></button>
-                </div>
-                <div class="modal-body">
-                    <div class="setting-group">
-                        <label for="github-token">GitHub Token (Optional)</label>
-                        <div class="input-with-icon">
-                            <i class="ri-key-2-line"></i>
-                            <input type="password" id="github-token" placeholder="ghp_xxxxxxxxxxxxxxxx">
-                        </div>
-                    </div>
-                    <div class="setting-group">
-                        <div class="toggle-row">
-                            <span>Force ZIP for single files</span>
-                            <label class="switch">
-                                <input type="checkbox" id="force-zip">
-                                <span class="slider round"></span>
-                            </label>
-                        </div>
-                    </div>
-                    <div class="setting-group">
-                        <label>Theme</label>
-                        <select id="theme-select">
-                            <option value="light">Light</option>
-                            <option value="dark">Dark</option>
-                            <option value="amoled">AMOLED</option>
-                            <option value="dracula">Dracula</option>
-                            <option value="cyberpunk">Cyberpunk</option>
-                            <option value="forest" selected>Forest</option> <!-- Add 'selected' here -->
-                            <option value="sunset">Sunset</option>
-                            <option value="monokai">Monokai</option>
-                        </select>
-                    </div>
-                    <div class="setting-group">
-                        <label>Accent Color</label>
-                        <input type="color" id="accent-color" value="#4ade80" style="width:100%">
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button class="primary-btn close-modal">Save</button>
-                </div>
+            <div class="progress-track" id="progress-container">
+                <div class="progress-fill" id="bar"></div>
             </div>
         </div>
-        <div id="toast-container"></div>
-        <footer style="width:-webkit-fill-available; text-align:center;">
-            © 2025 <a href="https://github.com/MicroResearch-Corporation/"
-                style="text-decoration:none; color:var(--accent); ">MicroResearch Corporation®</a>. All Rights
-            Reserved.<br><br>
-            Made with ♥ by <a aria-label="Visit M Ramzan Ch" href="https://mramzanch.blogspot.com/"
-                style="text-decoration:none; color:var(--accent); "> M
-                Ramzan Ch</a>
-        </footer>
 
-        <script src="/src/script.js"></script>
+    </div>
+    <script>
+    const savedTheme = localStorage.getItem("theme") || "forest";
+    if (savedTheme !== "light") {
+        document.body.classList.add(`theme-${savedTheme}`);
+    }
+    const savedAccent = localStorage.getItem("accent") || "#4ade80";
+    document.documentElement.style.setProperty("--primary-color", savedAccent);
 
-
+</script>
+    <script src="api.js"></script>
 </body>
 
 </html>
