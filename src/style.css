@@ -529,6 +529,22 @@ input::placeholder {
   color: #690005;
 }
 
+.state-success .circular-progress {
+  display: none;
+}
+
+.state-success .icon-success {
+  display: flex;
+}
+
+.state-error .circular-progress {
+  display: none;
+}
+
+.state-error .icon-error {
+  display: flex;
+}
+
 /* =========================================
    7. Modals & Settings
    ========================================= */
